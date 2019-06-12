@@ -22,5 +22,5 @@ class DirectUploadRequest {
     @required this.contentType,
     @required this.byteSize,
     @required Stream<List<int>> fileContents,
-  }) : checksum = FileChecksum(fileContents).md5;
+  }) : checksum = FileChecksum(fileContents, byteSize).md5;
 }
