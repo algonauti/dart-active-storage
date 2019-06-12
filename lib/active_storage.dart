@@ -11,14 +11,17 @@ import 'src/uploader.dart';
 export 'src/direct_upload.dart';
 
 class ActiveStorage {
-  static Future<DirectUploadResponse> upload({
+  final Uploader uploader;
+
+  ActiveStorage({@required directUploadURL})
+      : uploader = Uploader(directUploadURL);
+
+  Future<DirectUploadResponse> upload({
     @required String fileName,
     @required String fileMimeType,
     @required File file,
-    @required String directUploadURL,
     ProgressCallback onProgress,
   }) async {
-    final uploader = Uploader(directUploadURL);
     int fileSize = await file.length();
     String checksum = await FileChecksum.getMd5AsBase64(file: file);
     DirectUploadResponse response = await uploader.directUpload(
@@ -35,5 +38,9 @@ class ActiveStorage {
       onProgress: onProgress,
     );
     return Future.value(response);
+  }
+
+  void addHeader(name, value) {
+    uploader.addHeader(name, value);
   }
 }
