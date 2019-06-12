@@ -1,7 +1,5 @@
 import 'package:meta/meta.dart';
 
-import 'file_checksum.dart';
-
 class DirectUploadResponse {
   String id;
   String key;
@@ -21,6 +19,6 @@ class DirectUploadRequest {
     @required this.fileName,
     @required this.contentType,
     @required this.byteSize,
-    @required Stream<List<int>> fileContents,
-  }) : checksum = FileChecksum(fileContents, byteSize).md5;
+    @required this.checksum,
+  });
 }
