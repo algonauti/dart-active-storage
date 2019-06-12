@@ -6,11 +6,12 @@ typedef ProgressCallback = void Function(int progressPercent);
 
 class Uploader {
   final String directUploadURL;
+  var headers = Map<String, String>();
 
   Uploader(this.directUploadURL);
 
   Future<DirectUploadResponse> directUpload(DirectUploadRequest) {
-    // TODO
+    // TODO use headers
     return Future.value(DirectUploadResponse());
   }
 
@@ -22,5 +23,9 @@ class Uploader {
     // TODO
     onProgress(100);
     return null;
+  }
+
+  void addHeader(name, value) {
+    headers[name] = value;
   }
 }
