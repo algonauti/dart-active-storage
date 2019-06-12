@@ -41,4 +41,13 @@ class DirectUploadRequest {
     @required this.byteSize,
     @required this.checksum,
   });
+
+  String toJson() => json.encode({
+        'blob': {
+          'filename': fileName,
+          'content_type': contentType,
+          'byte_size': byteSize,
+          'checksum': checksum,
+        }
+      });
 }
