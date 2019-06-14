@@ -21,7 +21,7 @@ void main() {
         onProgress: (percent) => progress = percent,
       );
     }).then((DirectUploadResponse response) {
-      expect(response, new TypeMatcher<DirectUploadResponse>());
+      expect(response, TypeMatcher<DirectUploadResponse>());
       expect(response.signedId, isNotEmpty);
       expect(progress, 100.0);
     }).whenComplete(stopServer);
