@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 import 'direct_upload.dart';
 
-typedef ProgressCallback = void Function(int progressPercent);
+typedef ProgressCallback = void Function(double progressPercent);
 
 class Uploader {
   final String directUploadURL;
