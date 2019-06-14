@@ -34,6 +34,7 @@ class ActiveStorage {
     );
     await uploader.fileUpload(
       fileContents: file.openRead(),
+      byteSize: fileSize,
       directUploadResponse: response,
       onProgress: onProgress,
     );

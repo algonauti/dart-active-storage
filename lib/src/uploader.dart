@@ -32,6 +32,7 @@ class Uploader {
 
   Future<void> fileUpload({
     @required Stream<List<int>> fileContents,
+    @required int byteSize,
     @required DirectUploadResponse directUploadResponse,
     ProgressCallback onProgress,
   }) {
