@@ -6,8 +6,10 @@ import 'package:test/test.dart';
 import 'utils.dart';
 
 void main() {
-  test('upload() returns DirectUploadResponse', () async {
-    int progress;
+  test(
+      'upload() returns signedId in DirectUploadResponse and notifies progress',
+      () {
+    double progress;
     return startServer().then((_) {
       var activeStorage =
           ActiveStorage(directUploadURL: '$serverUrl/direct-upload');
@@ -20,7 +22,8 @@ void main() {
       );
     }).then((DirectUploadResponse response) {
       expect(response, new TypeMatcher<DirectUploadResponse>());
-      expect(progress, 100);
+      expect(response.signedId, isNotEmpty);
+      expect(progress, 100.0);
     }).whenComplete(stopServer);
   });
 }
