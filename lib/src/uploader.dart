@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
@@ -18,7 +19,6 @@ class Uploader {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json; charset=utf-8',
       'Accept': 'application/json',
-      // TODO maybe more?
     };
     requestHeaders.addAll(headers);
     http.Response response = await http.post(
@@ -35,10 +35,32 @@ class Uploader {
     @required int byteSize,
     @required DirectUploadResponse directUploadResponse,
     ProgressCallback onProgress,
-  }) {
-    // TODO
-    onProgress(100);
-    return null;
+  }) async {
+    HttpClientRequest request =
+        await HttpClient().putUrl(Uri.parse(directUploadResponse.uploadUrl));
+    directUploadResponse.headers.forEach((name, value) {
+      request.headers.set(name, value);
+    });
+    int uploaded = 0;
+    await request.addStream(fileContents.map((chunk) {
+      uploaded += chunk.length;
+      if (onProgress != null) onProgress(uploaded / byteSize * 100.0);
+      return chunk;
+    }));
+
+    HttpClientResponse response = await request.close();
+    if (response.statusCode != 200) {
+      String responseText = '';
+      await for (String textChunk in response.transform(utf8.decoder)) {
+        responseText += textChunk;
+      }
+      throw HttpStatusException(
+        request.method,
+        directUploadResponse.uploadUrl,
+        statusCode: response.statusCode,
+        responseBody: responseText,
+      );
+    }
   }
 
   void addHeader(name, value) {
@@ -53,8 +75,12 @@ class Uploader {
     if (response.statusCode == 200) {
       return utf8.decode(response.bodyBytes);
     } else {
-      throw HttpStatusException(method, url,
-          statusCode: code, responseBody: body);
+      throw HttpStatusException(
+        method,
+        url,
+        statusCode: code,
+        responseBody: body,
+      );
     }
   }
 }

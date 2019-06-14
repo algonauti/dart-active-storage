@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:http/http.dart';
+
 /// The current server instance.
 HttpServer _server;
 
@@ -32,8 +34,7 @@ Future startServer() {
           'signed_id':
               'eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBWms9IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--e9e436de22c082cd1142a42ea29daa7eaf5df97d',
           'direct_upload': {
-            'url':
-                'https://storage.googleapis.com/cb-uploads-staging/zcYSmqkyKqJH6Mez7WJAcuJ8?GoogleAccessId=cb-backend%40cinderblock-198615.iam.gserviceaccount.com&Expires=1560354389&Signature=gpuglU%2FIWlxwIfVGJC%2Fle5LxFOPZx%2FnCpcCFVJuRmXye9tX9T8a5hvj7j5ZVLUIoOmMGK8cu5ZIDc1Na08%2FXw0T%2BbCTRnBXIZ2fDTxzOrLQmMz1sfsGb4NGSRRrwaNNOKggU9sLpvrIWBLTNgijuyxScS%2FO90briiBDCtITlXf5Ogv%2BNIkypQV6dqYyR2661Jz0iy94LKFRIPjGsfJmLSroszgAaAqvyzRIf4JAmF0Lyq26oxqCtQpquZ5m7qh2xP7z5iC7KQKvzIPYX5yMQctMWAyd6w8Xwcl8S88vqO0ovTkWrTrZSCRdXinVaDwFFjFknT%2F4ymgf6KsLYN7nD2w%3D%3D',
+            'url': '$serverUrl/file-upload',
             'headers': {'Content-MD5': 'BdXPe8f6bkr3J4PcnYgnxw=='}
           }
         };
@@ -42,6 +43,17 @@ Future startServer() {
         response.write(body);
         response.close();
         return;
+      }
+
+      if (method == 'PUT' && path == '/file-upload') {
+        ByteStream(request).toBytes().then((requestBodyBytes) {
+          if (requestBodyBytes.isEmpty) {
+            response.statusCode = 403;
+          } else {
+            response.statusCode = 200;
+          }
+          response.close();
+        });
       }
     });
   });
