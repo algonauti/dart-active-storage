@@ -19,6 +19,13 @@ Future startServer() {
       var path = request.uri.path;
       var response = request.response;
 
+      if (path == '/error') {
+        response.statusCode = 400;
+        response.contentLength = 0;
+        response.close();
+        return;
+      }
+
       if (method == 'POST' && path == '/direct-upload') {
         response.statusCode = 200;
         response.headers.set('Content-Type', 'application/json; charset=utf-8');
