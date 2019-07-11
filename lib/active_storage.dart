@@ -13,7 +13,7 @@ export 'src/direct_upload.dart';
 class ActiveStorage {
   final Uploader uploader;
 
-  ActiveStorage({@required directUploadURL})
+  ActiveStorage({@required String directUploadURL})
       : uploader = Uploader(directUploadURL);
 
   Future<DirectUploadResponse> upload({
