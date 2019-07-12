@@ -51,7 +51,7 @@ class Uploader {
     HttpClientResponse response = await request.close();
     if (response.statusCode != 200) {
       String responseText = '';
-      await for (String textChunk in response.transform(utf8.decoder)) {
+      await for (String textChunk in utf8.decoder.bind(response)) {
         responseText += textChunk;
       }
       throw HttpStatusException(
