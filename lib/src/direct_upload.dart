@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
+typedef ProgressCallback = void Function(double progressPercent);
+
 class DirectUploadResponse {
   final int id;
   final String key;
