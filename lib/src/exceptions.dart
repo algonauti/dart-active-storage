@@ -66,3 +66,8 @@ class ServerError extends HttpStatusException {
 class NoNetworkError implements Exception {}
 
 class NetworkError implements Exception {}
+
+class InvalidDataReceived implements Exception {
+  String message;
+  InvalidDataReceived(this.message);
+}
