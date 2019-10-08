@@ -9,6 +9,7 @@ import 'src/file_checksum.dart';
 import 'src/uploader.dart';
 
 export 'src/direct_upload.dart';
+export 'src/exceptions.dart';
 
 class ActiveStorage {
   final Uploader uploader;
