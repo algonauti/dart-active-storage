@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
+import 'exceptions.dart';
+
 typedef ProgressCallback = void Function(double progressPercent);
 
 class DirectUploadResponse {
@@ -20,14 +22,18 @@ class DirectUploadResponse {
   });
 
   factory DirectUploadResponse.fromJson(String utf8Text) {
-    var parsed = json.decode(utf8Text);
-    return DirectUploadResponse(
-      id: parsed['id'],
-      key: parsed['key'],
-      signedId: parsed['signed_id'],
-      uploadUrl: parsed['direct_upload']['url'],
-      headers: Map<String, String>.from(parsed['direct_upload']['headers']),
-    );
+    try {
+      var parsed = json.decode(utf8Text);
+      return DirectUploadResponse(
+        id: parsed['id'],
+        key: parsed['key'],
+        signedId: parsed['signed_id'],
+        uploadUrl: parsed['direct_upload']['url'],
+        headers: Map<String, String>.from(parsed['direct_upload']['headers']),
+      );
+    } on FormatException catch (e) {
+      throw InvalidDataReceived(e.message);
+    }
   }
 }
 
