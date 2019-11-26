@@ -1,5 +1,5 @@
 name: active_storage
-description: Send files to Rails Active Storage using direct upload
+description: Send files to a Rails Active Storage backend using direct upload
 version: 0.1.0
 author: Algonauti <info@algonauti.com>
 homepage: https://www.algonauti.com
