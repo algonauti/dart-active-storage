@@ -84,7 +84,7 @@ class Uploader {
     try {
       String responseBody = utf8.decode(response.bodyBytes);
       String requestBody = request.body;
-      if (code != 200)
+      if (code != 200) {
         _throwHttpException(
           method,
           url,
@@ -92,6 +92,7 @@ class Uploader {
           requestBody: requestBody,
           responseBody: responseBody,
         );
+      }
       return responseBody;
     } on FormatException catch (e) {
       throw InvalidDataReceived(e.message);
@@ -105,11 +106,11 @@ class Uploader {
     String requestBody,
     String responseBody,
   }) {
-    if (statusCode > 400 && statusCode < 500)
+    if (statusCode > 400 && statusCode < 500) {
       throw ClientError(method, url, statusCode, requestBody, responseBody);
-    else if (statusCode >= 500 && statusCode <= 599)
+    } else if (statusCode >= 500 && statusCode <= 599) {
       throw ServerError(method, url, statusCode, requestBody, responseBody);
-    else {
+    } else {
       throw HttpStatusException(
         method,
         url,
