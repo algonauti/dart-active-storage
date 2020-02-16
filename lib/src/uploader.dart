@@ -42,6 +42,7 @@ class Uploader {
       directUploadResponse.headers.forEach((name, value) {
         request.headers.set(name, value);
       });
+      request.headers.set('content-length', byteSize);
       int uploaded = 0;
       await request.addStream(fileContents.map((chunk) {
         uploaded += chunk.length;
@@ -49,7 +50,7 @@ class Uploader {
         return chunk;
       }));
       HttpClientResponse response = await request.close();
-      if (response.statusCode < 200 && response.statusCode > 300) {
+      if (response.statusCode < 200 || response.statusCode > 300) {
         String responseText = '';
         await for (String textChunk in utf8.decoder.bind(response)) {
           responseText += textChunk;
@@ -84,7 +85,7 @@ class Uploader {
     try {
       String responseBody = utf8.decode(response.bodyBytes);
       String requestBody = request.body;
-      if (response.statusCode < 200 && response.statusCode > 300) {
+      if (response.statusCode < 200 || response.statusCode > 300) {
         _throwHttpException(
           method,
           url,
