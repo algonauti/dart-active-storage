@@ -2,6 +2,8 @@
 
 Send files to Rails Active Storage using direct upload.
 
+[![CI](https://github.com/algonauti/dart-active-storage/workflows/CI/badge.svg)](https://github.com/algonauti/dart-active-storage/actions)
+
 ## Getting Started
 
 First, you instantiate an `ActiveStorage` object, passing it your Rails' backend 
