@@ -22,7 +22,7 @@ class Uploader {
     requestHeaders.addAll(headers);
     http.Response response =
         await _safelyRun<http.Response>(() async => await http.post(
-              directUploadURL,
+              Uri.parse(directUploadURL),
               headers: requestHeaders,
               body: requestData.toJson(),
             ));
