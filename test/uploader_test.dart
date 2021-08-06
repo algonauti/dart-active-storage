@@ -42,7 +42,7 @@ void main() {
     test('sends large file in chunks and notifies progress', () async {
       var file = File('test/large.jpg');
       int fileSize = await file.length();
-      var progressPercents = List<double>();
+      var progressPercents = [];
       return startServer().then((_) {
         var uploader = Uploader('$serverUrl/direct-upload');
         return uploader.fileUpload(
@@ -60,7 +60,7 @@ void main() {
     test('sends small file altogether and notifies progress once', () async {
       var file = File('test/small.pdf');
       int fileSize = await file.length();
-      var progressPercents = List<double>();
+      var progressPercents = [];
       return startServer().then((_) {
         var uploader = Uploader('$serverUrl/direct-upload');
         return uploader.fileUpload(

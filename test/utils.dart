@@ -5,10 +5,10 @@ import 'dart:io';
 import 'package:http/http.dart';
 
 /// The current server instance.
-HttpServer _server;
+HttpServer? _server;
 
 /// The URL for the current server instance.
-Uri get serverUrl => Uri.parse('http://localhost:${_server.port}');
+Uri get serverUrl => Uri.parse('http://localhost:${_server!.port}');
 
 /// Starts a new HTTP server.
 Future startServer() {
@@ -69,7 +69,7 @@ Future startServer() {
 /// Stops the current HTTP server.
 void stopServer() {
   if (_server != null) {
-    _server.close();
+    _server!.close();
     _server = null;
   }
 }
