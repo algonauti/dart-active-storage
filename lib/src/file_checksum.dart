@@ -8,9 +8,9 @@ import 'exceptions.dart';
 
 class FileChecksum {
   final Stream<List<int>> fileContents;
-  Digest md5Digest;
+  late Digest md5Digest;
 
-  static Future<String> getMd5AsBase64({File file}) async {
+  static Future<String> getMd5AsBase64({required File file}) async {
     Stream<List<int>> _fileContents;
     try {
       _fileContents = file.openRead();

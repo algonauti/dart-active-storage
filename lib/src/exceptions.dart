@@ -1,14 +1,14 @@
 class FileChecksumException implements Exception {
-  final String message;
+  final String? message;
   FileChecksumException(this.message);
 }
 
 class HttpStatusException implements Exception {
   String method;
-  String url;
-  String responseBody;
-  String requestBody;
-  int statusCode;
+  String? url;
+  String? responseBody;
+  String? requestBody;
+  int? statusCode;
 
   HttpStatusException(
     this.method,
@@ -26,10 +26,10 @@ class HttpStatusException implements Exception {
 class ClientError extends HttpStatusException {
   ClientError(
     String method,
-    String url,
+    String? url,
     int statusCode,
-    String requestBody,
-    String responseBody,
+    String? requestBody,
+    String? responseBody,
   ) : super(
           method,
           url,
@@ -46,10 +46,10 @@ class ClientError extends HttpStatusException {
 class ServerError extends HttpStatusException {
   ServerError(
     String method,
-    String url,
+    String? url,
     int statusCode,
-    String requestBody,
-    String responseBody,
+    String? requestBody,
+    String? responseBody,
   ) : super(
           method,
           url,

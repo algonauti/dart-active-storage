@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-
 import 'exceptions.dart';
 
 typedef ProgressCallback = void Function(double progressPercent);
@@ -14,11 +12,11 @@ class DirectUploadResponse {
   final Map<String, String> headers;
 
   DirectUploadResponse({
-    @required this.id,
-    @required this.key,
-    @required this.signedId,
-    @required this.uploadUrl,
-    @required this.headers,
+    required this.id,
+    required this.key,
+    required this.signedId,
+    required this.uploadUrl,
+    required this.headers,
   });
 
   factory DirectUploadResponse.fromJson(String utf8Text) {
@@ -44,10 +42,10 @@ class DirectUploadRequest {
   final String checksum;
 
   DirectUploadRequest({
-    @required this.fileName,
-    @required this.contentType,
-    @required this.byteSize,
-    @required this.checksum,
+    required this.fileName,
+    required this.contentType,
+    required this.byteSize,
+    required this.checksum,
   });
 
   String toJson() => json.encode({
