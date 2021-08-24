@@ -85,7 +85,7 @@ class Uploader {
     try {
       String responseBody = utf8.decode(response.bodyBytes);
       String requestBody = request.body;
-      if (response.statusCode < 200 || response.statusCode > 300) {
+      if (code < 200 || code > 300) {
         _throwHttpException(
           method,
           url,
