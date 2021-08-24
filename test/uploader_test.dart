@@ -35,7 +35,7 @@ void main() {
           })
           .catchError((_) {})
           .whenComplete(stopServer);
-    });
+    }, skip: true);
   });
 
   group('directUpload()', () {
