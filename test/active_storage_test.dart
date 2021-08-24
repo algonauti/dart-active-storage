@@ -9,7 +9,7 @@ void main() {
   test(
       'upload() returns signedId in DirectUploadResponse and notifies progress',
       () {
-    double progress;
+    double? progress;
     return startServer().then((_) {
       var activeStorage =
           ActiveStorage(directUploadURL: '$serverUrl/direct-upload');

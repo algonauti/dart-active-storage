@@ -26,12 +26,12 @@ void main() {
 
     test('throws HttpStatusException on server error', () {
       return startServer()
-          .then((_) {
+          .then((_) async {
             var uploader = Uploader('$serverUrl/error');
-            Future<DirectUploadResponse> result =
-                uploader.directUpload(directUploadRequestSample);
-            expect(result, throwsA(TypeMatcher<HttpStatusException>()));
-            return result;
+            await expectLater(
+              uploader.directUpload(directUploadRequestSample),
+              throwsA(TypeMatcher<HttpStatusException>()),
+            );
           })
           .catchError((_) {})
           .whenComplete(stopServer);
@@ -42,7 +42,7 @@ void main() {
     test('sends large file in chunks and notifies progress', () async {
       var file = File('test/large.jpg');
       int fileSize = await file.length();
-      var progressPercents = List<double>();
+      List<double> progressPercents = [];
       return startServer().then((_) {
         var uploader = Uploader('$serverUrl/direct-upload');
         return uploader.fileUpload(
@@ -60,7 +60,7 @@ void main() {
     test('sends small file altogether and notifies progress once', () async {
       var file = File('test/small.pdf');
       int fileSize = await file.length();
-      var progressPercents = List<double>();
+      List<double> progressPercents = [];
       return startServer().then((_) {
         var uploader = Uploader('$serverUrl/direct-upload');
         return uploader.fileUpload(
@@ -79,15 +79,16 @@ void main() {
       var file = File('test/small.pdf');
       int fileSize = await file.length();
       return startServer()
-          .then((_) {
+          .then((_) async {
             var uploader = Uploader('$serverUrl/direct-upload');
-            Future<void> result = uploader.fileUpload(
-              fileContents: file.openRead(),
-              byteSize: fileSize,
-              directUploadResponse: wrongDirectUploadResponse,
+            await expectLater(
+              uploader.fileUpload(
+                fileContents: file.openRead(),
+                byteSize: fileSize,
+                directUploadResponse: wrongDirectUploadResponse,
+              ),
+              throwsA(TypeMatcher<HttpStatusException>()),
             );
-            expect(result, throwsA(TypeMatcher<HttpStatusException>()));
-            return result;
           })
           .catchError((_) {})
           .whenComplete(stopServer);

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 
 import 'direct_upload.dart';
 import 'exceptions.dart';
@@ -31,10 +30,10 @@ class Uploader {
   }
 
   Future<void> fileUpload({
-    @required Stream<List<int>> fileContents,
-    @required int byteSize,
-    @required DirectUploadResponse directUploadResponse,
-    ProgressCallback onProgress,
+    required Stream<List<int>> fileContents,
+    required int byteSize,
+    required DirectUploadResponse directUploadResponse,
+    ProgressCallback? onProgress,
   }) async {
     await _safelyRun<void>(() async {
       HttpClientRequest request =
@@ -77,7 +76,7 @@ class Uploader {
   }
 
   String _checkAndDecode(http.Response response) {
-    http.Request request = response.request;
+    http.Request request = response.request as http.Request;
     String method = request.method;
     String url = request.url.toString();
     int code = response.statusCode;
@@ -101,10 +100,10 @@ class Uploader {
 
   void _throwHttpException(
     String method,
-    String url, {
-    int statusCode,
-    String requestBody,
-    String responseBody,
+    String? url, {
+    required int statusCode,
+    String? requestBody,
+    String? responseBody,
   }) {
     if (statusCode > 400 && statusCode < 500) {
       throw ClientError(method, url, statusCode, requestBody, responseBody);
