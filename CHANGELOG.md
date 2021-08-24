@@ -1,3 +1,7 @@
+## [1.0.0] - Aug 24th, 2021
+
+* Migrated to null safety
+
 ## [0.2.0] - May 6rd, 2021
 
 * Upgraded `http` to `0.13.3`
