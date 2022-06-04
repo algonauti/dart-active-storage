@@ -1,3 +1,8 @@
+## [1.1.0] - Jun 4th, 2022
+
+* Improved error handling
+* Updated packages
+
 ## [1.0.0] - Aug 24th, 2021
 
 * Migrated to null safety
